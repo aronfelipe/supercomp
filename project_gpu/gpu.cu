@@ -78,7 +78,7 @@ int main() {
             for (int j = 0; j < k; j++) {
                 subsequences_a.push_back(dnas_first_seq_cpu_flexible[j]);
             }
-            subsequences_a_length.push_back(k);
+            subsequences_a_length.push_back(k - 1);
             k = k - 1;
             // subsequences_a.push_back(next_subsequence);
             // next_subsequence.clear();

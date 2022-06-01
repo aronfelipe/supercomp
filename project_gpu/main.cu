@@ -81,28 +81,80 @@ int main() {
         k = dnas_first_seq_cpu_flexible.size();
     }
 
-    // while (dnas_second_seq_cpu_flexible.size() > 0) {
-    //     while(l > 0) {
-    //         host_vector<char> next_subsequence;
-    //         for (int j = 0; j < l; j++) {
-    //             next_subsequence.push_back(dnas_second_seq_cpu_flexible[j]);
-    //         }
-    //         l = l - 1;
+    while (dnas_second_seq_cpu_flexible.size() > 0) {
+        while(l > 0) {
+            host_vector<char> next_subsequence;
+            for (int j = 0; j < l; j++) {
+                next_subsequence.push_back(dnas_second_seq_cpu_flexible[j]);
+            }
+            l = l - 1;
 
-    //         subsequences_a.push_back(next_subsequence);
-    //         next_subsequence.clear();
+            subsequences_b.push_back(next_subsequence);
+            next_subsequence.clear();
+        }
+        dnas_second_seq_cpu_flexible.erase(dnas_second_seq_cpu_flexible.begin());
+        l = dnas_second_seq_cpu_flexible.size();
+    }
+
+    cout << subsequences_a.size();
+    cout << endl;
+    cout << subsequences_b.size();
+
+    for (int i = 0; i < subsequences_a.size(); i++) {
+        for (int j = 0; j < subsequences_b.size(); j++) {
+            device_vector<int> s_temp(subsequences_a[i].size());
+            device_vector<int> s_temp_final(subsequences_a[i].size());
+
+            if (i == 0) {
+                for (int t = 0; t < subsequences_a[i].size(); t++) {
+                    s_temp[t] = 0;
+                }
+            }
+            if (j == 0) {
+                s_temp[0] = 0;
+            }
+            // for (auto& el: s_temp) {
+            //     cout << el;
+            // }
+            for(int t = 0; t < s_temp.size(); t++) {
+                cout << s_temp[t];
+            }
+            cout << endl;
+        }
+    }
+
+    // if (subsequences_a.size() >= subsequences_b.size()) {
+    //     for(int i = 0; i < subsequences_a.size(); i++) {
+    //         for (int j = 0; j < subsequences_b.size(); j++) {
+    //             for (int t = 0; t < subsequences_a[i].size(); t++) {
+    //                 cout << subsequences_b[i][t];
+    //                 for (int y = 0; y < subsequences_b[j].size(); y++) {
+    //                     cout << subsequences_b[j][y];
+    //                     cout << endl;
+
+    //                     break;
+
+    //                 }
+    //             }
+    //             // cout << endl;
+
+
+    //             // cout << endl;
+    //         }
     //     }
-    //     dnas_second_seq_cpu_flexible.erase(dnas_second_seq_cpu_flexible.begin());
-    //     l = dnas_second_seq_cpu_flexible.size();
+    // }
+
+    // for (int i = 0; i < subsequences_a.size(); i++) {
+
     // }
 
 
-    for (auto& el: subsequences_a) {
-        for (auto& element : el) {
-            cout << element;
-        }
-        cout << endl;
-    }
+    // for (auto& el: subsequences_a) {
+    //     for (auto& element : el) {
+    //         cout << element;
+    //     }
+    //     cout << endl;
+    // }
 
     // for (auto& el: subsequences_b) {
     //     for (auto& element : el) {
