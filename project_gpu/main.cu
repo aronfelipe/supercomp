@@ -1,28 +1,37 @@
 #include <thrust/transform.h>
 #include <thrust/device_vector.h>
 #include <thrust/host_vector.h>
+#include <thrust/iterator/counting_iterator.h>
 #include <iostream>
+#include <thrust/copy.h>
 
 using namespace std;
 using namespace thrust;
 
-// __device__ int fact(int f)
-// {
-//   if (f == 0)
-//     return 1;
-//   else
-//     return f * fact(f - 1);
-// }
+struct calculate_score
+{
+    char letter;
+    int position_letter;
+    device_vector<char> data_subsequence;
+    device_vector<int> last_line_calculation;
 
+    calculate_score(thrust::device_vector<char> data_subsequence, char letter, thrust::device_vector<int> last_line_calculation, int position_letter) : data_subsequence(data_subsequence), letter(letter), last_line_calculation(last_line_calculation), position_letter(position_letter) {};
 
-// struct generate_subsequences
-// {
-//     __host__ __device__
-//     double operator()(const int& x) {
+    __host__ __device__
+    int operator()(const int& counting_i) {
+        
+        int i = counting_i;
+        // int j = position_letter;
+        int diagonal = 2;
+        if (data_subsequence[i] == letter) {
+            int diagonal = last_line_calculation[i-1] + 2;
+        } else {
+            int diagonal = last_line_calculation[i-1] - 1;
+        }
 
-//     }
-// };
-
+        return diagonal;
+    }
+};
 
 int main() {
 
@@ -33,15 +42,9 @@ int main() {
 
     host_vector<char> dnas_first_seq_cpu;
     host_vector<char> dnas_second_seq_cpu;
-    // device_vector<char> dnas_first_seq_gpu(n);
-    // device_vector<char> dnas_second_seq_gpu(m);
-
-    // device_vector<device_vector<char> > subsequences_b;
 
     dnas_first_seq_cpu.reserve(n);
     dnas_second_seq_cpu.reserve(m);
-    // dnas_first_seq_gpu.reserve(n);
-    // dnas_second_seq_gpu.reserve(m);
 
     char dna_next;
 
@@ -96,32 +99,76 @@ int main() {
         l = dnas_second_seq_cpu_flexible.size();
     }
 
-    cout << subsequences_a.size();
-    cout << endl;
-    cout << subsequences_b.size();
-
     for (int i = 0; i < subsequences_a.size(); i++) {
-        for (int j = 0; j < subsequences_b.size(); j++) {
-            device_vector<int> s_temp(subsequences_a[i].size());
-            device_vector<int> s_temp_final(subsequences_a[i].size());
+        char *subsequence_from_sequence_a = subsequences_a[i].data();
+        device_vector<char> subsequence_a_gpu = subsequences_a[i];
+        int length_of_subsequence_a = strlen(subsequence_from_sequence_a);
+        device_vector<int> calculation[2];
+        calculation[0].resize(length_of_subsequence_a+1);
+        calculation[1].resize(length_of_subsequence_a+1);
+        thrust::fill(calculation[0].begin(), calculation[0].end(), 0);
 
-            if (i == 0) {
-                for (int t = 0; t < subsequences_a[i].size(); t++) {
-                    s_temp[t] = 0;
+        for (int j = 0; j < subsequences_b.size(); j++) {
+            char *subsequence_from_sequence_b = subsequences_a[j].data();
+            int length_of_subsequence_b = strlen(subsequence_from_sequence_b);
+
+            // device_vector<char> data_subsequence_a;
+            // thrust::copy(subsequences_a[i].begin(), subsequences_a[i].end(), data_subsequence_a);
+            for (int t = 0; t < length_of_subsequence_b; t++) {
+                cout << subsequence_from_sequence_b;
+                cout << endl;
+                char letter_from_subsequence_b = subsequence_from_sequence_b[t];
+                cout << letter_from_subsequence_b;
+                cout << endl;
+                for(int i = 0; i < subsequence_a_gpu.size(); i++) {
+                    cout << subsequence_a_gpu[i];
                 }
+                cout << endl;
+
+                for(int i = 0; i < calculation[0].size(); i++) {
+                    cout << calculation[0][i];
+                }
+                cout << endl;
+
+                thrust::transform(make_counting_iterator(1), make_counting_iterator(1), calculation[1].begin() + 1, calculate_score(subsequence_a_gpu, letter_from_subsequence_b, calculation[0], t));
             }
-            if (j == 0) {
-                s_temp[0] = 0;
-            }
-            // for (auto& el: s_temp) {
-            //     cout << el;
-            // }
-            for(int t = 0; t < s_temp.size(); t++) {
-                cout << s_temp[t];
+
+            for(int i = 0; i < calculation[1].size(); i++) {
+                cout << calculation[1][i];
             }
             cout << endl;
         }
     }
+
+    // cout << subsequences_a.size();
+    // cout << endl;
+    // cout << subsequences_b.size();
+
+
+
+    // for (int i = 0; i < subsequences_a.size(); i++) {
+    //     device_vector<int> s_temp(subsequences_a[i].size());
+    //     device_vector<int> s_temp_final(subsequences_a[i].size());
+    //     for (int j = 0; j < subsequences_b.size(); j++) {
+    //         for (int t = 0; )
+            
+    //         if (i == 0) {
+    //             for (int t = 0; t < subsequences_a[i].size(); t++) {
+    //                 s_temp[t] = 0;
+    //             }
+    //         }
+    //         if (j == 0) {
+    //             s_temp[0] = 0;
+    //         }
+    //         // for (auto& el: s_temp) {
+    //         //     cout << el;
+    //         // }
+    //         for(int t = 0; t < s_temp.size(); t++) {
+    //             cout << s_temp[t];
+    //         }
+    //         cout << endl;
+    //     }
+    // }
 
     // if (subsequences_a.size() >= subsequences_b.size()) {
     //     for(int i = 0; i < subsequences_a.size(); i++) {
