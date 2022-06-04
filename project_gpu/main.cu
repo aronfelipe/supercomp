@@ -100,41 +100,58 @@ int main() {
     }
 
     for (int i = 0; i < subsequences_a.size(); i++) {
-        char *subsequence_from_sequence_a = subsequences_a[i].data();
+        // char *subsequence_from_sequence_a = subsequences_a[i].data();
         device_vector<char> subsequence_a_gpu = subsequences_a[i];
-        int length_of_subsequence_a = strlen(subsequence_from_sequence_a);
-        device_vector<int> calculation[2];
-        calculation[0].resize(length_of_subsequence_a+1);
-        calculation[1].resize(length_of_subsequence_a+1);
-        thrust::fill(calculation[0].begin(), calculation[0].end(), 0);
+        // int length_of_subsequence_a = strlen(subsequence_from_sequence_a);
+        cout << subsequences_a[i].size() << endl;
+
+        // cout << length_of_subsequence_a << endl;
+        device_vector<int> calculation_temp;
+        device_vector<int> calculation_score;
+
+        // cout << calculation[0][0];
+
+        // calculation[0].resize(subsequences_a[i].size()+1);
+        // calculation[1].resize(subsequences_a[i].size()+1);
+        thrust::fill(calculation_temp.begin(), calculation_temp.end(), 0);
 
         for (int j = 0; j < subsequences_b.size(); j++) {
-            char *subsequence_from_sequence_b = subsequences_a[j].data();
-            int length_of_subsequence_b = strlen(subsequence_from_sequence_b);
+            // char *subsequence_from_sequence_b = subsequences_b[j].data();
+            // int length_of_subsequence_b = strlen(subsequence_from_sequence_b);
 
             // device_vector<char> data_subsequence_a;
             // thrust::copy(subsequences_a[i].begin(), subsequences_a[i].end(), data_subsequence_a);
-            for (int t = 0; t < length_of_subsequence_b; t++) {
-                cout << subsequence_from_sequence_b;
-                cout << endl;
-                char letter_from_subsequence_b = subsequence_from_sequence_b[t];
+            for (int t = 0; t < subsequences_b[j].size(); t++) {
+                // cout << subsequence_from_sequence_b;
+                // cout << endl;
+                char letter_from_subsequence_b = subsequences_b[j][t];
                 cout << letter_from_subsequence_b;
                 cout << endl;
                 for(int i = 0; i < subsequence_a_gpu.size(); i++) {
+                    if (subsequence_a_gpu[i] == letter_from_subsequence_b) {
+                        cout << "MATCH";
+                    }
                     cout << subsequence_a_gpu[i];
                 }
                 cout << endl;
 
-                for(int i = 0; i < calculation[0].size(); i++) {
-                    cout << calculation[0][i];
-                }
-                cout << endl;
+                // for(int i = 0; i < calculation[0].size(); i++) {
+                //     cout << calculation[0][i];
+                // }
 
-                thrust::transform(make_counting_iterator(1), make_counting_iterator(1), calculation[1].begin() + 1, calculate_score(subsequence_a_gpu, letter_from_subsequence_b, calculation[0], t));
+                thrust::counting_iterator<int> counting(1);
+                
+                thrust::transform(counting, counting, calculation_score.begin() + 1, calculate_score(subsequence_a_gpu, letter_from_subsequence_b, calculation_temp, t));
             }
 
-            for(int i = 0; i < calculation[1].size(); i++) {
-                cout << calculation[1][i];
+            // cout << "AQUI";
+            // cout << calculation[1].begin();
+            // cout << "AQUI";
+
+            cout << calculation_score.size();
+
+            for(int i = 0; i < calculation_score.size(); i++) {
+                cout << calculation_score[i];
             }
             cout << endl;
         }
