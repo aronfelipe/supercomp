@@ -1,5 +1,6 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "vector": "cpp",
         "__split_buffer": "cpp",
         "string": "cpp",
@@ -23,11 +24,25 @@
         "atomic": "cpp",
         "bit": "cpp",
         "bitset": "cpp",
+=======
+        "array": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "iostream": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "*.tcc": "cpp",
+>>>>>>> 060b5cf622a74e27c577f4fdafa52bf9686dd575
         "cctype": "cpp",
         "chrono": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
+<<<<<<< HEAD
         "complex": "cpp",
+=======
+        "condition_variable": "cpp",
+>>>>>>> 060b5cf622a74e27c577f4fdafa52bf9686dd575
         "cstdarg": "cpp",
         "cstddef": "cpp",
         "cstdint": "cpp",
@@ -37,6 +52,7 @@
         "ctime": "cpp",
         "cwchar": "cpp",
         "cwctype": "cpp",
+<<<<<<< HEAD
         "exception": "cpp",
         "functional": "cpp",
         "initializer_list": "cpp",
@@ -71,4 +87,39 @@
         "concepts": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
+=======
+        "deque": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "optional": "cpp",
+        "random": "cpp",
+        "ratio": "cpp",
+        "string": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "iosfwd": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "mutex": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "thread": "cpp",
+        "typeinfo": "cpp"
+    }
+>>>>>>> 060b5cf622a74e27c577f4fdafa52bf9686dd575
 }
