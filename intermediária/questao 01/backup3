@@ -1,0 +1,168 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+
+using namespace std;
+
+bool time_of_job_function (int i ,int j) { return (i>j); }
+
+int main() {
+
+    int number_of_jobs = 0;
+    int number_of_machines = 0;
+
+    cin >> number_of_jobs >> number_of_machines;
+
+    // cout << number_of_jobs << number_of_machines;
+
+    vector<int> jobs;
+
+    for(int i = 0; i < number_of_jobs; i++) {
+        int time_of_job;
+        cin >> time_of_job;
+        jobs.push_back(time_of_job);
+    }
+
+    sort(jobs.begin(), jobs.end(), time_of_job_function);
+
+    // for(auto& el: jobs) {
+    //     cout << el;
+    // }
+
+    vector<vector<int> > matrix_of_machines;
+    
+    for(int i = 0; i < number_of_machines; i++) {
+        vector<int> next_machine;
+        matrix_of_machines.push_back(next_machine);
+    }
+
+    int min_charge_of_machine = 0;
+    int machine_to_be_used = 0;
+
+    while(jobs.size() > 0) {
+        for (int i = 0; i < number_of_machines; i++) {
+            int charge_of_machine = accumulate(matrix_of_machines[i].begin(), matrix_of_machines[i].end(), 0.0);
+            charge_of_machine = charge_of_machine + jobs.back();
+            cout << charge_of_machine << endl;
+            cout << min_charge_of_machine;
+            if (charge_of_machine <= min_charge_of_machine) {
+                machine_to_be_used = i;
+                min_charge_of_machine = charge_of_machine;
+            }
+        }
+        matrix_of_machines[machine_to_be_used].push_back(jobs.back());
+        jobs.pop_back();
+    }
+    
+    // int machine_to_be_used = 0;
+    // int min_sum_of_jobs = 0;
+
+    // while(jobs.size() > 0) {
+    //     for (int j = 0; j < number_of_machines; j++) {
+    //         int sum_of_jobs = accumulate(matrix_of_machines[j].begin(), matrix_of_machines[j].end(), 0.0);
+    //         // cout << sum_of_jobs << endl;
+    //         sum_of_jobs += jobs.back();
+    //         if(sum_of_jobs < min_sum_of_jobs) {
+    //             machine_to_be_used = j;
+    //             min_sum_of_jobs = sum_of_jobs;
+    //         }
+    //     }
+
+    //     matrix_of_machines[machine_to_be_used].push_back(jobs.back());
+    //     jobs.pop_back();
+    // }
+    
+    // while (jobs.size() > 0) {
+    //     for (int i = 0; i < number_of_machines; i++) {
+    //         int sum_of_jobs = accumulate(matrix_of_machines[i].begin(), matrix_of_machines[i].end(), 0.0);
+    //         // cout << sum_of_jobs << endl;
+    //         if (sum_of_jobs <= max_sum_of_jobs) {
+    //             machine_to_be_used = i;
+    //             max_sum_of_jobs = sum_of_jobs;
+    //         }
+    //     }
+    //     matrix_of_machines[machine_to_be_used].push_back(jobs.back());
+    //     jobs.pop_back();
+    // }
+
+    // int counter = 0;
+
+    // while(number_of_machines > counter) {
+    //     matrix_of_machines[counter].push_back(jobs[0]);
+    //     counter++;
+    //     jobs.erase(jobs.begin());
+    // }
+
+    // Loop:
+    // counter = 0;
+
+    // while(number_of_machines > counter) {
+    //     matrix_of_machines[counter].push_back(jobs.back());
+    //     jobs.pop_back();
+    //     counter++;
+    // }
+
+    // if(jobs.size() > 0) {
+    //     goto Loop;
+    // }
+
+    // while(jobs.size() > 0) {
+        // matrix_of_machines[counter].push_back(jobs[-1]);
+        // jobs.erase(jobs.end());
+        // counter++;
+        // if (counter == number_of_machines) {
+        //     counter = 0;
+        //     for (int i = 0; i < number_of_machines; i++) {
+        //         // matrix_of_machines[counter].push_back(jobs[-i]);
+        //         jobs.erase(jobs.end());
+        //         counter++;
+        //     }
+        // }
+
+    // }
+
+    // for (int i = 0; i < number_of_machines; i++) {
+    //     matrix_of_machines[i].push_back(jobs[i]);
+    // }
+
+    // for (int i = jobs.size(); i > number_of_machines; i--) {
+    //     for (int j = 0; j < number_of_machines; j++) {
+    //         matrix_of_machines[j].push_back(jobs[i]);
+    //         break;
+    //     }
+    // }
+
+    // int number_of_machine_to_be_used = 0;
+
+    // int counter = 0;
+
+    // while (jobs.size() > number_of_machines) {
+    //     matrix_of_machines[counter].push_back(jobs[0]);
+    //     counter++;
+    //     jobs.erase(jobs.begin());
+    //     if(counter == number_of_machines) {
+    //         counter = 0;
+    //     }
+    // }
+
+    // for (int i = jobs.size(); i < number_of_machines; i--) {
+
+    // }
+
+    // while(jobs.size() < number_of_machines) {
+    //     matrix_of_machines[counter].push_back(jobs[0]);
+    //     counter++;
+    //     // jobs.erase
+        
+    // }
+
+
+    for (auto& el: matrix_of_machines) {
+        for(auto& element: el){
+            cout << element;
+        }
+        cout << endl;
+    }
+
+
+}

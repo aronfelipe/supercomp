@@ -1,0 +1,3 @@
+Nenhuma solução gulosa garante uma solução ótima para problemas desse tipo. Isso acontece pelo fato de não
+olharmos o bound, por exemplo, para verificar se é possível melhorar a resposta. Mesmo olhando o bound não
+podemos garantir que é uma solução ótima.

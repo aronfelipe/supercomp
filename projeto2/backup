@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+struct dna
+{
+    int id;
+    char dna_value;
+};
+
+struct dna_matrix {
+    int location_x;
+    int location_y;
+    int matrix_value;
+};
+
+int main() {
+
+    int n; int m;
+
+    cin >> n >> m;
+
+    vector<dna> dnas_first_seq;
+    vector<dna> dnas_second_seq;
+
+    dnas_first_seq.reserve(n);
+    dnas_second_seq.reserve(m);
+
+    dna dna_next;
+
+    for(int i = 0; i < n; i++) {
+        cin >> dna_next.dna_value;
+        dna_next.id = i;
+        dnas_first_seq.push_back(dna_next);
+    }
+
+    for(int i = 0; i < m; i++) {
+        cin >> dna_next.dna_value;
+        dna_next.id = i;
+        dnas_second_seq.push_back(dna_next);
+    }
+
+    vector<dna_matrix> matrix;
+
+    dna_matrix dna_matrix_next;
+
+    for (int i = 0; i < n; i++) {
+        dna_matrix_next.location_x = i;
+        dna_matrix_next.location_y = 0;
+        dna_matrix_next.matrix_value = 0;
+        matrix.push_back(dna_matrix_next);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (j == 0){
+                dna_matrix_next.location_x = i;
+                dna_matrix_next.location_y = j;
+                dna_matrix_next.matrix_value = 0;
+                matrix.push_back(dna_matrix_next);
+            } else {
+                dna_matrix_next.location_x = i;
+                dna_matrix_next.location_y = j;
+                dna_matrix_next.matrix_value = 1;
+                matrix.push_back(dna_matrix_next);
+            }
+        }
+    }
+
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j < m; j++) {
+            int diagonal =
+        }
+    }
+
+
+
+
+    // for(auto& el: matrix) {
+    //     cout << el.matrix_value;
+    // }
+
+    
+
+    return 0;
+}

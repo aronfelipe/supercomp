@@ -1,0 +1,11 @@
+
+Create recursive function knapSack.
+    Put first element of jobs in first machine.
+    Put second element of jobs in first machine.
+    Calculate total of charge of fist machine. If the sum of all. 
+    Remove charge from jobs.
+    If machine 
+Read m and n.
+Read jobs.
+Sort jobs to decrescent order;
+Use recursive function knapSack;
